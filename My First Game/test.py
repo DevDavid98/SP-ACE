@@ -9,6 +9,7 @@ def main():
 
     text = pygame.font.Font(None, 50)
     text_surface = text.render("HELLO WORLD", False, (255,255,255))
+    text_rect = text_surface.get_rect(center = (300,100))
 
     space_img = pygame.image.load('game assets/space_game.jpg').convert_alpha()
     player_img = pygame.image.load('game assets/player1.png').convert_alpha()
@@ -20,7 +21,7 @@ def main():
     enemy_img = pygame.transform.scale(enemy_img,(40,40))
     enemy_rect = enemy_img.get_rect(center = (150,150))
 
-    ship_speed = 5
+    ship_speed = 10
     rect_hits = 0
     while True:
         for event in pygame.event.get():
@@ -31,15 +32,19 @@ def main():
         screen.blit(space_img,(0,0))
         screen.blit(player_img, player_rect)
         screen.blit(enemy_img, enemy_rect)
+        pygame.draw.rect(screen, 'Red', text_rect)
+        pygame.draw.rect(screen, 'Red', text_rect, 10)
+        pygame.draw.line(screen, 'Purple', (0,0),pygame.mouse.get_pos(), 10)
+        screen.blit(text_surface, text_rect)
 
         pressed_key = pygame.key.get_pressed()
-        if pressed_key[pygame.K_LEFT]:
+        if pressed_key[pygame.K_a]:
             player_rect.centerx -= ship_speed
-        if pressed_key[pygame.K_RIGHT]:
+        if pressed_key[pygame.K_d]:
             player_rect.centerx += ship_speed
-        if pressed_key[pygame.K_UP]:
+        if pressed_key[pygame.K_w]:
             player_rect.centery -= ship_speed
-        if pressed_key[pygame.K_DOWN]:
+        if pressed_key[pygame.K_s]:
             player_rect.centery += ship_speed
 
         if player_rect.right < 0:
